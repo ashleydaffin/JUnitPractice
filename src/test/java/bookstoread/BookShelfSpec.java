@@ -6,7 +6,7 @@ import org.junit.jupiter.api.TestInfo;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("<= BookShelf Specification =>")
+@DisplayName("A bookshelf")
 public class BookShelfSpec {
 
     private BookShelfSpec(TestInfo testInfo) {
@@ -14,6 +14,7 @@ public class BookShelfSpec {
     }
 
     @Test
+    @DisplayName("is empty when no book is added to it")
     public void shelfEmptyWhenNoBookAdded(TestInfo testInfo) throws Exception {
         System.out.println("From test method...Working on test " + testInfo.getDisplayName());
         BookShelf shelf = new BookShelf();
