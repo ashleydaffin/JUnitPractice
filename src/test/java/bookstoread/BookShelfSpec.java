@@ -1,16 +1,14 @@
 package bookstoread;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import org.junit.jupiter.api.TestInfo;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("A bookshelf")
 public class BookShelfSpec {
@@ -66,7 +64,7 @@ public class BookShelfSpec {
             assertTrue(e instanceof UnsupportedOperationException, () -> "Should throw UnsupportedOperationException.");
         }
     }
-
+    @Disabled ("Needs to implement Comparator")
     @Test
     void bookshelfArrangedByBookTitle(){
         shelf.add(effectiveJava, codeComplete, mythicalManMonth);
@@ -79,14 +77,13 @@ public class BookShelfSpec {
         shelf.add(effectiveJava, codeComplete, mythicalManMonth);
         shelf.arrange();
         List<Book> books = shelf.books();
-        assertEquals(Arrays.asList(effectiveJava, codeComplete, mythicalManMonth), books, () -> "Books in bookself are in insertion order");
+        assertEquals(Arrays.asList(effectiveJava, codeComplete, mythicalManMonth), books, () -> "Books in bookshelf are in insertion order");
     }
     @Test
     void bookshelfArrangedByUserProvidedCriteria(){
         shelf.add(effectiveJava, codeComplete, mythicalManMonth);
-        List<Book> books = shelf.arrange(Comparator.<Book>naturalOrder().reversed());
-        assertEquals(Arrays.asList(mythicalManMonth, effectiveJava, codeComplete),
-                books,
-                () -> "Books in a bookshelf are arranged in descending order of book title");
+        Comparator<Book> reversed = Comparator.<Book>naturalOrder().reversed();
+        List<Book> books = shelf.arrange(reversed);
+        assertThat(books).isSortedAccordingTo(reversed);
     }
 }
