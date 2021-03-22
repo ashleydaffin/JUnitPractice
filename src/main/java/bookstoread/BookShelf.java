@@ -7,4 +7,7 @@ public class BookShelf {
     public List<String> books() {
         return Collections.emptyList();
     }
+
+    public void add(String bookToAdd) {
+    }
 }
