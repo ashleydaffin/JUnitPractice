@@ -10,7 +10,7 @@ public class BookShelf {
     private final List<String> books = new ArrayList<>();
 
     public List<String> books() {
-        return books;
+        return Collections.unmodifiableList(books);
     }
     public void add(String... booksToAdd) {
         Arrays.stream(booksToAdd).forEach(books::add);
