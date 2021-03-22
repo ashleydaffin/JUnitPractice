@@ -1,9 +1,6 @@
 package bookstoread;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class BookShelf {
 
@@ -14,5 +11,10 @@ public class BookShelf {
     }
     public void add(String... booksToAdd) {
         Arrays.stream(booksToAdd).forEach(books::add);
+    }
+
+    public List<String> arrange() {
+        books.sort(Comparator.naturalOrder());
+        return books;
     }
 }
