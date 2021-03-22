@@ -4,8 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import java.util.List;
 import org.junit.jupiter.api.TestInfo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("A bookshelf")
 public class BookShelfSpec {
@@ -24,7 +23,7 @@ public class BookShelfSpec {
     }
 
     @Test
-    void bookshelfContainsTwoBooksWhenTwoBooksAdded(){
+    void bookshelfContainsTwoBooksWhenTwoBooksAdded() {
         BookShelf shelf = new BookShelf();
         shelf.add("Effective Java", "Code Complete");
         List<String> books = shelf.books();
@@ -32,11 +31,24 @@ public class BookShelfSpec {
     }
 
     @Test
-    public void emptyBookShelfWhenAddIsCalledWithoutBooks(){
+    public void emptyBookShelfWhenAddIsCalledWithoutBooks() {
         BookShelf shelf = new BookShelf();
         shelf.add();
         List<String> books = shelf.books();
         assertTrue(books.isEmpty(), () -> "BookShelf should empty");
 
     }
-}
+
+    @Test
+    void booksReturnedFromBookShelfIsImmutableForClient() {
+        BookShelf shelf = new BookShelf();
+        shelf.add("Effective Java", "Code Complete");
+        List<String> books = shelf.books();
+        try {
+            books.add("The Mythical Man-Month");
+            fail(() -> "Should not be able to add book to books");
+        } catch (Exception e) {
+            assertTrue(e instanceof UnsupportedOperationException, () -> "Should throw UnsupportedOperationException.");
+        }
+
+    }}
