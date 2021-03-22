@@ -25,6 +25,7 @@ public class BookShelf {
     }
 
     public Map<Year, List<Book>> groupByPublicationYear(){
-        return null;
+        return books.stream()
+                .collect(Collectors.groupingBy(book -> Year.of(book.getPublishedOn().getYear())));
     }
 }
