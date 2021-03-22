@@ -39,6 +39,7 @@ public class BookShelfSpec {
     }
 
     @Test
+    @DisplayName("bookshelf contains two books when two books are added")
     void bookshelfContainsTwoBooksWhenTwoBooksAdded() {
         shelf.add(effectiveJava, codeComplete);
         List<Book> books = shelf.books();
@@ -46,6 +47,7 @@ public class BookShelfSpec {
     }
 
     @Test
+    @DisplayName("empty bookshelf remains empty when add is called without books")
     public void emptyBookShelfWhenAddIsCalledWithoutBooks() {
         shelf.add();
         List<Book> books = shelf.books();
@@ -54,6 +56,7 @@ public class BookShelfSpec {
     }
 
     @Test
+    @DisplayName("bookshelf returns an immutable books collection to client")
     void booksReturnedFromBookShelfIsImmutableForClient() {
         shelf.add(effectiveJava, codeComplete);
         List<Book> books = shelf.books();
@@ -66,6 +69,7 @@ public class BookShelfSpec {
     }
     @Disabled ("Needs to implement Comparator")
     @Test
+    @DisplayName("bookshelf is arranged lexicographically by book title")
     void bookshelfArrangedByBookTitle(){
         shelf.add(effectiveJava, codeComplete, mythicalManMonth);
         List<Book> books = shelf.arrange();
@@ -73,6 +77,7 @@ public class BookShelfSpec {
 
     }
     @Test
+    @DisplayName("bookshelf remains in insertion order after calling arrange mehtod")
     void booksInBookShelfAreInInsertionOrderAfterCallingArrange(){
         shelf.add(effectiveJava, codeComplete, mythicalManMonth);
         shelf.arrange();
@@ -80,6 +85,7 @@ public class BookShelfSpec {
         assertEquals(Arrays.asList(effectiveJava, codeComplete, mythicalManMonth), books, () -> "Books in bookshelf are in insertion order");
     }
     @Test
+    @DisplayName("bookshelf is arrange by user provided criteria(by book title reversed lexicographically")
     void bookshelfArrangedByUserProvidedCriteria(){
         shelf.add(effectiveJava, codeComplete, mythicalManMonth);
         Comparator<Book> reversed = Comparator.<Book>naturalOrder().reversed();
