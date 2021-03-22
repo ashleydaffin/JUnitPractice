@@ -3,7 +3,10 @@ package bookstoread;
 
 import java.time.Year;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 public class BookShelf {
 
@@ -26,6 +29,13 @@ public class BookShelf {
 
     public Map<Year, List<Book>> groupByPublicationYear(){
         return books.stream()
-                .collect(Collectors.groupingBy(book -> Year.of(book.getPublishedOn().getYear())));
+                .collect(groupingBy(book -> Year.of(book.getPublishedOn().getYear())));
+    }
+
+    public <K> Map<K, List<Book>> groupBy(Function<Book, K> fx){
+        return books
+                .stream()
+                .collect(groupingBy(fx));
+
     }
 }

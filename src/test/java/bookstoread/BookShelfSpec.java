@@ -1,4 +1,5 @@
 package bookstoread;
+
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class BookShelfSpec {
         effectiveJava = new Book("Effective Java", "Joshua Bloch", LocalDate.of(2008, Month.MAY, 8));
         codeComplete = new Book("Code Complete", "Steve McConnel", LocalDate.of(2004, Month.JUNE, 9));
         mythicalManMonth = new Book("The Mythical Man-Month", "Frederick Phillips Brooks", LocalDate.of(1975, Month.JANUARY, 1));
-        cleanCode = new Book("Clean Code", "Robert Martin", LocalDate.of(2008, Month.AUGUST, 1));
+        cleanCode = new Book("Clean Code", "Robert C. Martin", LocalDate.of(2008, Month.AUGUST, 1));
     }
 
     private BookShelfSpec(TestInfo testInfo) {
@@ -72,7 +73,7 @@ public class BookShelfSpec {
             assertTrue(e instanceof UnsupportedOperationException, () -> "Should throw UnsupportedOperationException.");
         }
     }
-    @Disabled ("Needs to implement Comparator")
+    @Disabled("Needs to implement Comparator")
     @Test
     @DisplayName("bookshelf is arranged lexicographically by book title")
     void bookshelfArrangedByBookTitle(){
@@ -115,6 +116,31 @@ public class BookShelfSpec {
         assertThat(booksByPublicationYear)
                 .containsKey(Year.of(1975))
                 .containsValues(singletonList(mythicalManMonth));
+
+
+    }
+
+    @Test
+    @DisplayName("books inside bookshelf are grouped according to user provided criteria: Author name")
+    void groupBooksByUserProvidedCriteria(){
+        shelf.add(effectiveJava, codeComplete, mythicalManMonth, cleanCode);
+        Map<String, List<Book>> booksByAuthor = shelf.groupBy(Book::getAuthor);
+
+        assertThat(booksByAuthor)
+                .containsKey("Joshua Bloch")
+                .containsValues(singletonList(effectiveJava));
+
+        assertThat(booksByAuthor)
+                .containsKey("Steve McConnel")
+                .containsValues(singletonList(codeComplete));
+
+        assertThat(booksByAuthor)
+                .containsKey("Frederick Phillips Brooks")
+                .containsValues(singletonList(mythicalManMonth));
+
+        assertThat(booksByAuthor)
+                .containsKey("Robert C. Martin")
+                .containsValues(singletonList(cleanCode));
 
 
     }
